@@ -287,7 +287,7 @@ export default function PortfolioClient({ projects }) {
           className="mt-20 pt-8 flex justify-between items-center font-mono text-xs"
           style={{ borderTop: "1px solid #0d0d0d", color: "#1e1e1e" }}
         >
-          <span>P3g4su · 2025</span>
+          <span>P3g4su · 2026</span>
           <Link href="/logs" className="hover:text-purple-500 transition-colors" style={{ color: "#2a2a2a" }}>
             logs →
           </Link>
