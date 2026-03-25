@@ -1,0 +1,31 @@
+[
+    {
+    "slug": "nome-unico",
+    "title": "Nome do Projeto 2",
+    "shortDescription": "Uma linha para o card.",
+    "fullDescription": "Descrição completa que aparece no modal.",
+    "tags": ["Python", "Pentest"],
+    "image": "/images/portfolio/nome.png",
+    "links": {
+        "site": "https://...",
+        "github": "https://github.com/..."
+    },
+    "year": "2025",
+    "featured": false
+    },
+
+    {
+    "slug": "nome-2unico",
+    "title": "Nome do Projeto",
+    "shortDescription": "Uma linha para o card.",
+    "fullDescription": "Descrição completa que aparece no modal.",
+    "tags": ["Python", "Pentest"],
+    "image": "/images/portfolio/nome.png",
+    "links": {
+        "site": "https://...",
+        "github": "https://github.com/..."
+    },
+    "year": "2025",
+    "featured": false
+    }
+]
