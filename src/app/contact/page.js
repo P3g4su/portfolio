@@ -86,7 +86,7 @@ export default function Contact() {
           {/* Botão CV */}
           <Reveal delay={0.25} className="mb-10">
             <a
-              href="/curriculo/pedro-augusto-cv.pdf"
+              href="/curriculo/curriculo.pdf"
               download
               className="group flex items-center justify-between w-full px-5 py-4 rounded-sm transition-all duration-300"
               style={{ border: "1px solid rgba(139,92,246,0.2)", backgroundColor: "rgba(139,92,246,0.05)" }}
