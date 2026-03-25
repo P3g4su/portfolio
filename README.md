@@ -1,4 +1,4 @@
-# P3g4su // Core System & Portfolio
+# P3g4su // Portfolio
 
 
 Este repositório contém o código-fonte da minha infraestrutura pessoal na web. Não é um template genérico. Foi arquitetado do zero.
