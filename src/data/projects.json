@@ -1,31 +1,17 @@
 [
     {
-    "slug": "nome-unico",
-    "title": "Nome do Projeto 2",
-    "shortDescription": "Uma linha para o card.",
-    "fullDescription": "Descrição completa que aparece no modal.",
-    "tags": ["Python", "Pentest"],
-    "image": "/images/portfolio/nome.png",
+    "slug": "portfolio",
+    "title": "Meu novo portfolio",
+    "shortDescription": "Meu site novo feito com Next Js",
+    "fullDescription": "você esta neste site... veja por si mesmo",
+    "tags": ["Site", "Web"],
+    "image": "/images/portfolio/portfolio.png",
     "links": {
-        "site": "https://...",
-        "github": "https://github.com/..."
+        "site": "https://p3g4su.vercel.app",
+        "github": "https://github.com/P3g4su/portfolio"
     },
-    "year": "2025",
-    "featured": false
-    },
-
-    {
-    "slug": "nome-2unico",
-    "title": "Nome do Projeto",
-    "shortDescription": "Uma linha para o card.",
-    "fullDescription": "Descrição completa que aparece no modal.",
-    "tags": ["Python", "Pentest"],
-    "image": "/images/portfolio/nome.png",
-    "links": {
-        "site": "https://...",
-        "github": "https://github.com/..."
-    },
-    "year": "2025",
+    "year": "2026",
     "featured": false
     }
+
 ]
