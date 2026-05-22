@@ -4,6 +4,12 @@ import matter from "gray-matter";
 
 const contentDir = path.join(process.cwd(), "src", "content");
 
+function calcReadingTime(content) {
+  const words = content.trim().split(/\s+/).length;
+  const minutes = Math.ceil(words / 200);
+  return minutes < 1 ? 1 : minutes;
+}
+
 export function getAllPosts(type) {
   const dir = path.join(contentDir, type);
   if (!fs.existsSync(dir)) return [];
@@ -23,8 +29,9 @@ export function getAllPosts(type) {
       date:        data.date        || "",
       topics:      data.topics      || [],
       image:       data.image       || null,
-      pdf:         data.pdf         || null,   // ← novo: caminho do PDF para writeups
+      pdf:         data.pdf         || null,
       draft:       data.draft       || false,
+      readingTime: calcReadingTime(content),
       content,
     };
   });
@@ -51,6 +58,7 @@ export function getPostBySlug(type, slug) {
     image:       data.image       || null,
     pdf:         data.pdf         || null,
     draft:       data.draft       || false,
+    readingTime: calcReadingTime(content),
     content,
   };
 }

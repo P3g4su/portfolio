@@ -1,0 +1,19 @@
+jornadaupworkcom
+
+-------------------------------------------------------------------------------
+
+/home2/jornadaupworkcom/public_html/wp-content/plugins/tutor-pro/openai/Constants/audits/index.php: SL-PHP-INJECTOR-1-ntz.UNOFFICIAL FOUND
+/home2/jornadaupworkcom/public_html/wp-content/plugins/gamipress/integrations/wplms/photos/index.php: SL-PHP-INJECTOR-1-ntz.UNOFFICIAL FOUND
+/home2/jornadaupworkcom/public_html/wp-content/plugins/uncanny-automator/src/integrations/audits/index.php: SL-PHP-INJECTOR-1-ntz.UNOFFICIAL FOUND
+
+----------- SCAN SUMMARY -----------
+Known viruses: 927250
+Engine version: 1.0.7
+Scanned directories: 7422
+Scanned files: 34773
+Infected files: 3
+Data scanned: 1269.30 MB
+Data read: 1925.91 MB (ratio 0.66:1)
+Time: 1149.918 sec (19 m 9 s)
+Start Date: 2026:05:19 16:05:24
+End Date:   2026:05:19 16:24:34

@@ -1,0 +1,83 @@
+---
+title: "Binding Pins & Broken Logic"
+date: "2026-05-23"
+image: "/images/articles/lockpick.webp"
+tags: ["mindset", "appsec", "opsec", "lockpicking", "pentest"]
+---
+
+Ownando a Própria Casa
+
+Minha mãe estava sentada na escada do prédio, conformada com o caos. Tínhamos um compromisso com o horário estourado e eu havia cometido um erro básico de *opsec* na vida real: a chave de casa tinha ficado na casa da minha avó. O tempo de ir até lá e voltar ia arruinar completamente a nossa agenda.
+
+Eu olhei para a porta e falei: "Me arruma um clipe de papel". Ela revirou os olhos. Ninguém bota fé que o proprio filho com dois clip de papel iria resolver o problema. Achei melhor não discutir. Desci na portaria, catei três clipes na mesa(sim, três, para caso algum quebrasse, como eu só sabia na teoria...) e voltei para o corredor.
+
+Moldei o metal, apliquei a tensão no miolo, e em dois minutos de pura sensibilidade nos dedos, o "click" soou. A porta abriu.
+
+Minha mãe ficou boquiaberta. E foi ali, olhando para a cara dela no corredor, que a minha maior tese sobre defesa de sistemas se materializou fisicamente na minha frente: **a segurança é uma ilusão que só dura até que alguém entenda o mecanismo.**
+
+A porta da minha casa não era intransponível. Ela apenas mantinha as pessoas honestas do lado de fora e afastava curiosos destreinados. E no mundo digital, as coisas funcionam exatamente da mesma forma.
+
+Mas a verdade é que a minha jornada dissecando vulnerabilidades não começou ali.
+
+### O Contexto da Batalha: Da Igreja à Gambiconf
+
+A primeira vez que encostei num *lockpick* improvisado foi por puro acidente e desespero. Eu tinha, sem querer, trancado a chave da igreja dentro da cabine multimídia. Fui no instinto: peguei um grampo de cabelo e um clipe, enfiei no miolo e comecei a testar. Consegui dar meio giro. O coração acelerou, mas o medo de forçar demais e quebrar o cilindro de uma porta que não me pertencia me fez recuar. 
+
+Eu não abri aquela porta, mas a semente foi plantada ali. Pouco tempo depois, comprei [meu primeiro kit de estudo](https://meli.la/33eS4ka).
+
+Como de praxe para entender qualquer arquitetura, a gente começa analisando o código-fonte em claro. No caso do *lockpicking*, o "código-fonte" é isso aqui:
+
+![Kit Chave micha e Cadeado transparente](/images/articles/cadeado-transparente-treino.webp)
+
+Quando você estuda um cadeado transparente e vê as molas e os pinos expostos, o mito do objeto "intransponível" morre instantaneamente. Você entende que não existe mágica, apenas engenharia mecânica básica com tolerâncias e falhas de fabricação.
+
+Isso escalou rápido. Algum tempo depois, eu estava como *staff* na Gambiconf, evento de tecnologia e segurança na USP. No meio da correria, precisávamos de cabos de vídeo para os apresentadores, mas todos os cabos estavam trancados dentro das gaiolas de proteção de CPU nas salas de aula. Em vez de rodar o campus inteiro atrás de um bedel com a chave mestra, então eu peguei as michas e abri todas as gaiolas necessárias em alguns minutos. Rápido, silencioso e assustadoramente fácil.
+
+### A Prova de Conceito: O Metal e o Código
+
+O que abrir gaiolas de PC com gazuas e portas de casa com clipes de papel me ensinou sobre AppSec, DevSecOps e Pentest? Absolutamente tudo. O *mindset* do invasor é idêntico nos dois mundos.
+
+#### 1. O Defeito de Fabricação vs. Falha Lógica (Broken Logic)
+
+Nenhum cadeado é perfeito. O *lockpicking* só é possível porque os furos no tambor nunca são perfeitamente alinhados durante a usinagem. Quando você aplica tensão, um dos pinos "prende" antes dos outros (nós chamamos de *binding pin*). 
+
+No mundo digital, esse defeito de usinagem é a **falha lógica**. É a sua API que valida perfeitamente o token JWT, mas esquece de checar no back-end se aquele ID de usuário específico tem permissão para alterar aquele recurso. A gaiola da Gambiconf é exatamente como um front-end bloqueado, mas com o back-end frouxo.
+
+Aqui está a visão desse "defeito de fabricação" na web. Um request interceptado no Burp Suite durante um [lab](https://portswigger.net/web-security/access-control/lab-insecure-direct-object-references):
+
+![Request no Burp Suite mostrando a manipulação de um parâmetro numérico](/images/articles/idor.webp)
+
+Como você pode ver, a aplicação tentou ser segura escondendo a interface, mas quando eu manipulo o `valor do arquivo` direto no pacote HTTP, o mecanismo interno engasga e libera o acesso a uma consulta de outro user. Falha de Autorização (*IDOR*). Eu encontrei o pino que prendeu torto.
+
+```bash
+# A lógica de explorar um IDOR massivo é como passar uma chave "mixa" (jiggler).
+# Você força o mecanismo iterando os arquivos de forma automatizada até o sistema ceder e vazar algo crítico.
+
+for i in {1..50}; do
+  # Disparando requests iterando o número do arquivo de transcript, caçando senhas
+  echo "[*] Testando transcript $i.txt..."
+  curl -s -X GET "[https://linkdolab.com.br/download-transcript/$i.txt](https://linkdolab.com.br/download-transcript/$i.txt)" \
+  -H "Cookie: session=\$MINHA_SESSAO_LOW_PRIV" | grep -i "password"
+done
+```
+
+### 2. O Feedback Tátil vs. Side-Channel Attacks
+Sentir o pino travar no cilindro através do tensor é a fechadura sussurrando para você: *"opa, você acertou uma parte do segredo"*. O sistema responde fisicamente aos seus estímulos.
+
+No pentest nós procuramos exatamente o mesmo "click". Pode ser a tela de login retornando "Senha Incorreta" em vez de "Credenciais Inválidas" (vazando que o usuário existe). Pode ser um **Time-Based Blind SQL Injection**, onde mandamos um payload malicioso e o servidor demora 5 segundos a mais do que o normal para responder. É o banco de dados tremendo na ponta do nosso request, confessando silenciosamente que a vulnerabilidade é real. O feedback tátil do digital vem em milissegundos.
+
+### O Fix / Hardening: Como Não Ser "Pickado"
+Se você usa segurança por obscuridade, seja trancando uma gaiola com um cadeado barato de R$ 15 ou escondendo a rota `/api/v2/admin` do Swagger da aplicação, você vai ser ownado.
+
+Para fechar as portas no mundo real e no código, a abordagem da engenharia é uma só:
+
+1. **Defesa em Profundidade (Defense in Depth):** Não confie só na chave da porta (seu WAF). Se o atacante der um bypass com clipes de papel (como manipular cabeçalhos HTTP), o ambiente interno precisa ter validações severas de *Zero Trust.*
+
+2. **Sanitização de Input:** O pino prende porque a tolerância é ruim. No código, sua tolerância ruim é aceitar strings gigantescas, caracteres especiais não tratados e IDs previsíveis em queries de banco. Trate e valide TUDO.
+
+3. **Auditoria (Pentest Contínuo):** Fechaduras desgastam. Bibliotecas desatualizam. Um sistema blindado hoje pode ser invadido por um script público de *Nuclei* amanhã. Teste os próprios cadeados antes que alguém teste por você.
+
+### Post-Mortem
+Seja lidando com cilindros de latão ou requests HTTP, a premissa raiz é sempre a mesma: entender profundamente como um mecanismo funciona te dá o poder de subvertê-lo. A porta da minha casa não era intransponível, ela apenas mantinha as pessoas honestas do lado de fora e afastava curiosos destreinados.
+
+Da próxima vez que você comitar uma arquitetura confiando que "ninguém vai pensar em explorar esse fluxo tão complexo", lembre-se de que, em algum lugar, alguém pode estar segurando dois clipes de papel, pronto para provar o contrário.
