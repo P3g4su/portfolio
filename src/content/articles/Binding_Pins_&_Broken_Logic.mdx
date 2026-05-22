@@ -5,11 +5,11 @@ image: "/images/articles/lockpick.webp"
 tags: ["mindset", "appsec", "opsec", "lockpicking", "pentest"]
 ---
 
-Ownando a Própria Casa
+### Ownando a Própria Casa
 
 Minha mãe estava sentada na escada do prédio, conformada com o caos. Tínhamos um compromisso com o horário estourado e eu havia cometido um erro básico de *opsec* na vida real: a chave de casa tinha ficado na casa da minha avó. O tempo de ir até lá e voltar ia arruinar completamente a nossa agenda.
 
-Eu olhei para a porta e falei: "Me arruma um clipe de papel". Ela revirou os olhos. Ninguém bota fé que o proprio filho com dois clip de papel iria resolver o problema. Achei melhor não discutir. Desci na portaria, catei três clipes na mesa(sim, três, para caso algum quebrasse, como eu só sabia na teoria...) e voltei para o corredor.
+Eu olhei para a porta e falei: "Me arruma um clipe de papel". Ela revirou os olhos. Ninguém bota fé que o próprio filho com dois clip de papel iria resolver o problema. Achei melhor não discutir. Desci na portaria, catei três clipes na mesa(sim, três, para caso algum quebrasse, como eu só sabia na teoria...) e voltei para o corredor.
 
 Moldei o metal, apliquei a tensão no miolo, e em dois minutos de pura sensibilidade nos dedos, o "click" soou. A porta abriu.
 
@@ -50,7 +50,7 @@ Aqui está a visão desse "defeito de fabricação" na web. Um request intercept
 Como você pode ver, a aplicação tentou ser segura escondendo a interface, mas quando eu manipulo o `valor do arquivo` direto no pacote HTTP, o mecanismo interno engasga e libera o acesso a uma consulta de outro user. Falha de Autorização (*IDOR*). Eu encontrei o pino que prendeu torto.
 
 ```bash
-# A lógica de explorar um IDOR massivo é como passar uma chave "mixa" (jiggler).
+# A lógica de explorar um IDOR massivo é como passar uma chave "micha" (jiggler).
 # Você força o mecanismo iterando os arquivos de forma automatizada até o sistema ceder e vazar algo crítico.
 
 for i in {1..50}; do
